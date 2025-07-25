@@ -73,7 +73,7 @@ export default function Header() {
                 }`}
                 style={!isScrolled ? { textShadow: '0 2px 8px rgba(0,0,0,0.7), 0 0px 1px #fff' } : {}}
               >
-                PBW NETWORK
+                PBW Web Architects
               </span>
             </a>
           </div>

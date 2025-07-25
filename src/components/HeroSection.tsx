@@ -12,11 +12,11 @@ export default function HeroSection() {
   ]
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden sm:mb-8">
       {/* Static Background Image */}
       <div className="absolute inset-0 w-full h-full z-0">
         <Image
-          src="/pbw-bg-teams.png"
+          src="/bg.jpg"
           alt="PBW Team Background"
           fill
           priority
@@ -41,15 +41,15 @@ export default function HeroSection() {
               className="text-5xl md:text-7xl font-bold text-white drop-shadow-lg"
               style={{ transform: 'none' }}
             >
-              <span className="block" style={{ transform: 'none' }}>Building the</span>
-              <span className="block text-gradient text-white" style={{ transform: 'none' }}>Future of Web</span>
+              <span className="block">Building the</span>
+              <span className="block text-gradient text-white">Future of Web Applications</span>
             </motion.h1>
             
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="max-w-6xl mx-auto text-xl md:text-1xl text-white leading-relaxed drop-shadow"
+              className="max-w-8xl mx-auto text-xl md:text-1xl text-white leading-relaxed drop-shadow"
             >
               PBW Web Architects, LLC is a Team of highly skilled professionals, with more than 30 years 
               of experience combined in the Information Technology Industry and Software Development, 
@@ -96,7 +96,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16"
+            className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 pb-8"
           >
             {stats.map((stat, index) => (
               <motion.div

@@ -29,7 +29,7 @@ export default function ProjectsSection() {
 
   if (loading) {
     return (
-      <section id="projects" className="section-padding bg-white dark:bg-gray-900">
+      <section id="projects" className="section-padding bg-white dark:bg-gray-900 sm:mt-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
