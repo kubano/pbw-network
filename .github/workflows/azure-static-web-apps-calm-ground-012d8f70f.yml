@@ -24,6 +24,12 @@ jobs:
           node-version: '18'
           cache: 'npm'
           cache-dependency-path: src/package-lock.json
+      - name: Install dependencies
+        run: |
+          cd src
+          npm ci --silent --no-fund --no-audit
+        env:
+          NPM_CONFIG_UPDATE_NOTIFIER: false
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
