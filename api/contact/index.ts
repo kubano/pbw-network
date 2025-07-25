@@ -37,16 +37,48 @@ async function contactHandler(request: HttpRequest, context: InvocationContext):
     }
   }
 
+  // Add a simple GET endpoint for testing
+  if (request.method === 'GET') {
+    return {
+      status: 200,
+      headers: corsHeaders,
+      jsonBody: { 
+        message: 'Contact API is working', 
+        timestamp: new Date().toISOString(),
+        environment: {
+          hasSupabaseUrl: !!process.env.SUPABASE_URL,
+          hasSupabaseKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+          hasSendGridKey: !!process.env.SENDGRID_API_KEY,
+          hasFromEmail: !!process.env.FROM_EMAIL,
+          hasNotificationEmail: !!process.env.NOTIFICATION_EMAIL
+        }
+      }
+    }
+  }
+
   if (request.method !== 'POST') {
     return {
       status: 405,
       headers: corsHeaders,
-      jsonBody: { error: 'Method not allowed' }
+      jsonBody: { error: `Method ${request.method} not allowed` }
     }
   }
 
   try {
+    context.info('Processing contact form submission...')
+    
+    // Check environment variables first
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      context.error('Missing Supabase configuration')
+      return {
+        status: 500,
+        headers: corsHeaders,
+        jsonBody: { error: 'Server configuration error - Supabase not configured' }
+      }
+    }
+
     const formData: ContactFormData = await request.json() as ContactFormData
+    context.info('Form data received:', { name: formData.name, email: formData.email })
 
     // Validate required fields
     if (!formData.name || !formData.email || !formData.message) {
@@ -255,12 +287,23 @@ The PBW NETWORK Team
   } catch (error) {
     context.error('Error processing contact form:', error)
     
+    // Provide more specific error information
+    let errorMessage = 'Internal server error. Please try again later.'
+    if (error instanceof Error) {
+      context.error('Error details:', error.message)
+      // Don't expose internal error details to client in production
+      if (process.env.NODE_ENV === 'development') {
+        errorMessage = error.message
+      }
+    }
+    
     return {
       status: 500,
       headers: corsHeaders,
       jsonBody: {
-        error: 'Internal server error. Please try again later.',
-        success: false
+        error: errorMessage,
+        success: false,
+        timestamp: new Date().toISOString()
       }
     }
   }
