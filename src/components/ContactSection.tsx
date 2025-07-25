@@ -22,8 +22,13 @@ export default function ContactSection() {
     setSubmitStatus('idle')
 
     try {
+        const apiUrl =
+                process.env.NODE_ENV === 'development'
+                    ? 'http://localhost:7071/api/contact'
+                    : '/api/contact';
+
       // Call Azure Function for contact form submission
-      const response = await fetch('/api/contact', {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
