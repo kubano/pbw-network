@@ -10,11 +10,17 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 async function projectsHandler(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
   context.info('Projects API request received')
 
-  // CORS headers
+  // CORS headers with security headers
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
+    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), browsing-topics=()',
+    'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'"
   }
 
   // Handle preflight requests
