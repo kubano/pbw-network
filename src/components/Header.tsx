@@ -53,9 +53,9 @@ export default function Header() {
       }`}
     >
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          {/* Logo */}
-          <div className="flex-shrink-0">
+        <div className="flex items-center justify-between py-4 relative">
+          {/* Logo (centered on mobile, left on desktop) */}
+          <div className="flex-1 flex justify-center md:justify-start">
             <a href="#home" className="flex items-center space-x-3">
               <Image
                 src="/pbw-logo-built-nav.png"
@@ -66,7 +66,7 @@ export default function Header() {
                 style={{ height: 'auto', width: 'auto', maxWidth: 140, maxHeight: 40 }}
               />
               <span
-                className={`text-2xl font-bold transition-colors duration-300 ${
+                className={`hidden md:inline text-2xl font-bold transition-colors duration-300 ${
                   isScrolled
                     ? 'text-gray-900 dark:text-white'
                     : 'text-white'
@@ -79,7 +79,7 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
+          <div className="hidden md:block flex-1">
             <div className="ml-10 flex items-baseline space-x-8">
               {navigation.map((item) => (
                 <a
@@ -97,8 +97,8 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Social Links + Dark Mode Toggle */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Social Links + Dark Mode Toggle (desktop) */}
+          <div className="hidden md:flex items-center space-x-4 flex-1 justify-end">
             <button
               onClick={toggleDarkMode}
               aria-label="Toggle dark mode"
@@ -146,8 +146,8 @@ export default function Header() {
             </a>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile menu button (right aligned) */}
+          <div className="md:hidden absolute right-0 top-1/2 -translate-y-1/2">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
