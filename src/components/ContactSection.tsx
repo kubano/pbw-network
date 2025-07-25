@@ -22,10 +22,16 @@ export default function ContactSection() {
     setSubmitStatus('idle')
 
     try {
-        const apiUrl =
-                process.env.NODE_ENV === 'development'
-                    ? 'http://localhost:7071/api/contact'
-                    : '/api/contact';
+      // Use env variable if set, otherwise fallback to dev/prod logic
+      let apiUrl = '';
+      const envUrl = process.env.NEXT_PUBLIC_AZURE_FUNCTION_URL;
+      if (envUrl && envUrl.length > 0) {
+        apiUrl = envUrl.startsWith('http') ? envUrl : `https://${envUrl}`;
+      } else if (process.env.NODE_ENV === 'development') {
+        apiUrl = 'http://localhost:7071/api/contact';
+      } else {
+        apiUrl = '/api/contact';
+      }
 
       // Call Azure Function for contact form submission
       const response = await fetch(apiUrl, {
@@ -60,8 +66,8 @@ export default function ContactSection() {
     {
       icon: Phone,
       label: 'Phone',
-      value: '+1 (954) 555-0123',
-      href: 'tel:+19545550123'
+      value: '+1 (863) 354-1971',
+      href: 'tel:+86363541971'
     },
     {
       icon: MapPin,
@@ -81,7 +87,7 @@ export default function ContactSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 mt-8">
             Let's Build Something Amazing
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
@@ -161,7 +167,7 @@ export default function ContactSection() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600 dark:text-gray-300">Response Time</span>
-                  <span className="text-gray-900 dark:text-white font-medium">Within 24 hours</span>
+                  <span className="text-gray-900 dark:text-white font-medium">Within 4 hours</span>
                 </div>
               </div>
             </motion.div>

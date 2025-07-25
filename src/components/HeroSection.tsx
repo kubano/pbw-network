@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { ArrowRight, Star, Award, Users } from 'lucide-react'
+import Image from 'next/image'
 
 export default function HeroSection() {
   const stats = [
@@ -12,40 +13,19 @@ export default function HeroSection() {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-white to-primary-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900" />
-      
-      {/* Animated Background Shapes */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -100, 0],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary-200 dark:bg-primary-800 rounded-full mix-blend-multiply filter blur-xl opacity-30"
+      {/* Static Background Image */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        <Image
+          src="/pbw-bg-teams.png"
+          alt="PBW Team Background"
+          fill
+          priority
+          className="object-cover pointer-events-none select-none"
         />
-        <motion.div
-          animate={{
-            x: [0, -100, 0],
-            y: [0, 100, 0],
-            rotate: [360, 180, 0],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute top-3/4 right-1/4 w-96 h-96 bg-purple-200 dark:bg-purple-800 rounded-full mix-blend-multiply filter blur-xl opacity-30"
-        />
+        <div className="absolute inset-0 bg-black/60" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="mt-8 pt-8 relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -58,17 +38,18 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white"
+              className="text-5xl md:text-7xl font-bold text-white drop-shadow-lg"
+              style={{ transform: 'none' }}
             >
-              <span className="block">Building the</span>
-              <span className="block text-gradient">Future of Web</span>
+              <span className="block" style={{ transform: 'none' }}>Building the</span>
+              <span className="block text-gradient text-white" style={{ transform: 'none' }}>Future of Web</span>
             </motion.h1>
             
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="max-w-6xl mx-auto text-xl md:text-1xl text-gray-600 dark:text-gray-300 leading-relaxed"
+              className="max-w-6xl mx-auto text-xl md:text-1xl text-white leading-relaxed drop-shadow"
             >
               PBW Web Architects, LLC is a Team of highly skilled professionals, with more than 30 years 
               of experience combined in the Information Technology Industry and Software Development, 
@@ -80,7 +61,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="max-w-3xl mx-auto text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed mt-4"
+              className="max-w-3xl mx-auto text-lg md:text-xl text-white leading-relaxed mt-4 drop-shadow"
             >
               We are committed to develop long term business relationships with our customers 
               providing exceptional Customer Support and Services, leading your Organization 
@@ -125,11 +106,11 @@ export default function HeroSection() {
                 transition={{ duration: 0.5, delay: 1 + index * 0.1 }}
                 className="glass-morphism rounded-xl p-6 text-center"
               >
-                <stat.icon className="h-8 w-8 text-primary-600 mx-auto mb-4" />
-                <div className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+                <stat.icon className="h-8 w-8 text-primary-100 mx-auto mb-4" />
+                <div className="text-3xl md:text-4xl font-bold text-white mb-2 drop-shadow">
                   {stat.value}
                 </div>
-                <div className="text-gray-600 dark:text-gray-300 font-medium">
+                <div className="text-white font-medium drop-shadow">
                   {stat.label}
                 </div>
               </motion.div>
@@ -138,25 +119,7 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-gray-400 dark:border-gray-600 rounded-full flex justify-center"
-        >
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-1 h-3 bg-gray-400 dark:bg-gray-600 rounded-full mt-2"
-          />
-        </motion.div>
-      </motion.div>
+      {/* No scroll indicator, animation removed */}
     </section>
   )
 }
