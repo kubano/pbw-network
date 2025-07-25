@@ -39,7 +39,8 @@ export default function Header() {
                 src="/pbw-logo-built-nav.png"
                 alt="PBW Network Logo"
                 width={140}
-                height={40} 
+                height={40}
+                priority
               />
               <span className="text-2xl font-bold text-gradient">
                 PBW NETWORK
