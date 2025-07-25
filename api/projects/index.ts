@@ -1,5 +1,5 @@
 // Azure Function for fetching projects from Supabase
-import { AzureFunction, Context, HttpRequest } from "@azure/functions"
+import { HttpRequest, HttpResponseInit, InvocationContext, app } from "@azure/functions"
 import { createClient } from '@supabase/supabase-js'
 
 // Initialize Supabase
@@ -7,8 +7,8 @@ const supabaseUrl = process.env.SUPABASE_URL || ''
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-  context.log('Projects API request received')
+async function projectsHandler(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
+  context.info('Projects API request received')
 
   // CORS headers
   const corsHeaders = {
@@ -18,36 +18,35 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
   }
 
   // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    context.res = {
+  if (request.method === 'OPTIONS') {
+    return {
       status: 200,
       headers: corsHeaders,
     }
-    return
   }
 
-  if (req.method !== 'GET') {
-    context.res = {
+  if (request.method !== 'GET') {
+    return {
       status: 405,
       headers: corsHeaders,
-      body: { error: 'Method not allowed' }
+      jsonBody: { error: 'Method not allowed' }
     }
-    return
   }
 
   try {
     if (!supabaseUrl || !supabaseServiceKey) {
-      context.res = {
+      return {
         status: 500,
         headers: corsHeaders,
-        body: { error: 'Supabase configuration missing' }
+        jsonBody: { error: 'Supabase configuration missing' }
       }
-      return
     }
 
     // Get query parameters
-    const featured = req.query.featured === 'true'
-    const limit = req.query.limit ? parseInt(req.query.limit as string) : undefined
+    const url = new URL(request.url)
+    const featured = url.searchParams.get('featured') === 'true'
+    const limitParam = url.searchParams.get('limit')
+    const limit = limitParam ? parseInt(limitParam) : undefined
 
     let query = supabase
       .from('projects')
@@ -67,21 +66,20 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     const { data, error } = await query
 
     if (error) {
-      context.log.error('Error fetching projects from Supabase:', error)
-      context.res = {
+      context.error('Error fetching projects from Supabase:', error)
+      return {
         status: 500,
         headers: corsHeaders,
-        body: { error: 'Failed to fetch projects' }
+        jsonBody: { error: 'Failed to fetch projects' }
       }
-      return
     }
 
-    context.log(`Successfully fetched ${data?.length || 0} projects`)
+    context.info(`Successfully fetched ${data?.length || 0} projects`)
     
-    context.res = {
+    return {
       status: 200,
       headers: corsHeaders,
-      body: {
+      jsonBody: {
         success: true,
         projects: data || [],
         count: data?.length || 0
@@ -89,12 +87,12 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     }
 
   } catch (error) {
-    context.log.error('Error in projects API:', error)
+    context.error('Error in projects API:', error)
     
-    context.res = {
+    return {
       status: 500,
       headers: corsHeaders,
-      body: {
+      jsonBody: {
         error: 'Internal server error',
         success: false
       }
@@ -102,4 +100,8 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
   }
 }
 
-export default httpTrigger
+app.http('projects', {
+  methods: ['GET', 'OPTIONS'],
+  authLevel: 'anonymous',
+  handler: projectsHandler
+})

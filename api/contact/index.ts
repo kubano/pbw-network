@@ -1,5 +1,5 @@
 // Azure Function for handling contact form submissions with SendGrid integration
-import { AzureFunction, Context, HttpRequest } from "@azure/functions"
+import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions"
 import sgMail from '@sendgrid/mail'
 import { createClient } from '@supabase/supabase-js'
 
@@ -19,8 +19,8 @@ const supabaseUrl = process.env.SUPABASE_URL || ''
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-  context.log('Contact form submission received')
+async function contactHandler(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
+  context.info('Contact form submission received')
 
   // CORS headers
   const corsHeaders = {
@@ -30,49 +30,45 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
   }
 
   // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    context.res = {
+  if (request.method === 'OPTIONS') {
+    return {
       status: 200,
       headers: corsHeaders,
     }
-    return
   }
 
-  if (req.method !== 'POST') {
-    context.res = {
+  if (request.method !== 'POST') {
+    return {
       status: 405,
       headers: corsHeaders,
-      body: { error: 'Method not allowed' }
+      jsonBody: { error: 'Method not allowed' }
     }
-    return
   }
 
   try {
-    const formData: ContactFormData = req.body
+    const formData: ContactFormData = await request.json() as ContactFormData
 
     // Validate required fields
     if (!formData.name || !formData.email || !formData.message) {
-      context.res = {
+      return {
         status: 400,
         headers: corsHeaders,
-        body: { error: 'Missing required fields: name, email, and message are required' }
+        jsonBody: { error: 'Missing required fields: name, email, and message are required' }
       }
-      return
     }
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(formData.email)) {
-      context.res = {
+      return {
         status: 400,
         headers: corsHeaders,
-        body: { error: 'Invalid email format' }
+        jsonBody: { error: 'Invalid email format' }
       }
-      return
     }
 
     // Log the submission (in production, you'd save to database or send email)
-    context.log('Contact form data:', {
+    context.info('Contact form data:', {
       name: formData.name,
       email: formData.email,
       company: formData.company || 'Not provided',
@@ -101,17 +97,17 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
           .single()
 
         if (error) {
-          context.log.error('Error saving to Supabase:', error)
+          context.error('Error saving to Supabase:', error)
         } else {
-          context.log('Contact submission saved to Supabase:', data.id)
+          context.info('Contact submission saved to Supabase:', data.id)
           submissionId = data.id
         }
       } catch (dbError) {
-        context.log.error('Database error:', dbError)
+        context.error('Database error:', dbError)
         // Don't fail the entire request if database save fails
       }
     } else {
-      context.log.warn('Supabase not configured, skipping database save')
+      context.warn('Supabase not configured, skipping database save')
     }
 
     // Send notification email using SendGrid
@@ -237,19 +233,19 @@ The PBW NETWORK Team
           sgMail.send(autoResponseEmail)
         ])
 
-        context.log('Emails sent successfully via SendGrid')
+        context.info('Emails sent successfully via SendGrid')
       } catch (emailError) {
-        context.log.error('Error sending emails via SendGrid:', emailError)
+        context.error('Error sending emails via SendGrid:', emailError)
         // Don't fail the entire request if email fails
       }
     } else {
-      context.log.warn('SendGrid API key not configured, skipping email notifications')
+      context.warn('SendGrid API key not configured, skipping email notifications')
     }
 
-    context.res = {
+    return {
       status: 200,
       headers: corsHeaders,
-      body: {
+      jsonBody: {
         success: true,
         message: 'Thank you for your message! We will get back to you soon.',
         submissionId: submissionId
@@ -257,12 +253,12 @@ The PBW NETWORK Team
     }
 
   } catch (error) {
-    context.log.error('Error processing contact form:', error)
+    context.error('Error processing contact form:', error)
     
-    context.res = {
+    return {
       status: 500,
       headers: corsHeaders,
-      body: {
+      jsonBody: {
         error: 'Internal server error. Please try again later.',
         success: false
       }
@@ -270,4 +266,8 @@ The PBW NETWORK Team
   }
 }
 
-export default httpTrigger
+app.http('contact', {
+  methods: ['GET', 'POST', 'OPTIONS'],
+  authLevel: 'anonymous',
+  handler: contactHandler
+})

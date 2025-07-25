@@ -42,6 +42,7 @@ jobs:
           app_location: "/src" # App source code path
           api_location: "/api" # Api source code path - Azure Functions
           output_location: "out" # Built app content directory - Next.js static export
+          app_build_command: "npm run build" # Command to build the app 
           ###### End of Repository/Build Configurations ######
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
