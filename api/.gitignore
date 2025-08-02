@@ -1,0 +1,19 @@
+# Azure Functions
+bin/
+obj/
+appsettings.json
+local.settings.json
+
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+
+# Azure Functions Core Tools
+.vscode/
+.azure/

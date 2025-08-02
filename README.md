@@ -1,249 +1,149 @@
-# PBW Network - Modern Web Showcase
+# PBW Web Architects - Modern React Website
 
-# PBW NETWORK
+A stunning, modern React website for PBW Web Architects software engineering company, built with the latest design trends and technologies.
 
-A modern, responsive website for PBW NETWORK built with Next.js, Supabase, and Azure Functions.
+## 🚀 Features
 
-## Features
+- **Modern Design**: Glassmorphism effects, gradients, and micro-interactions
+- **Responsive**: Mobile-first design that works on all devices
+- **Dark/Light Mode**: Toggle between dark and light themes
+- **Smooth Animations**: Powered by Framer Motion
+- **Performance Optimized**: Built with Vite for fast development and build times
+- **Accessible**: Following web accessibility best practices
+- **SEO Friendly**: Optimized for search engines
 
-- **Modern Design**: Clean, responsive design with Tailwind CSS and Framer Motion animations
-- **Project Showcase**: Dynamic project portfolio with filtering and detailed views
-- **Contact System**: Contact form with Azure Functions backend
-- **Database Integration**: Supabase for project data storage
-- **Static Export**: Optimized for Azure Static Web Apps deployment
-- **TypeScript**: Full type safety throughout the application
+## 🛠 Tech Stack
 
-## Tech Stack
+- **React 18** - Latest React with hooks
+- **Vite** - Next generation build tool
+- **Tailwind CSS** - Utility-first CSS framework
+- **Framer Motion** - Motion library for React
+- **Lucide React** - Beautiful SVG icons
+- **Modern JavaScript** - ES6+ features
 
-- **Frontend**: Next.js 14, React 18, TypeScript
-- **Styling**: Tailwind CSS with custom design system
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-- **Database**: Supabase (PostgreSQL)
-- **Backend**: Azure Functions (for contact form)
-- **Deployment**: Azure Static Web Apps
-- **Forms**: React Hook Form
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+ and npm
-- Supabase account
-- Azure account (for Functions and Static Web Apps)
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/kubano/pbw-network.git
-   cd pbw-network/src
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env.local
-   ```
-   
-   Update `.env.local` with your actual values:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   NEXT_PUBLIC_AZURE_FUNCTION_URL=your_azure_function_url
-   ```
-
-4. **Set up Supabase database**
-   
-   Create the following tables in your Supabase database:
-
-   ```sql
-   -- Projects table
-   CREATE TABLE projects (
-     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-     title TEXT NOT NULL,
-     description TEXT NOT NULL,
-     image_url TEXT,
-     technologies TEXT[] NOT NULL DEFAULT '{}',
-     project_url TEXT,
-     github_url TEXT,
-     featured BOOLEAN DEFAULT false,
-     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
-     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
-   );
-
-   -- Contact submissions table
-   CREATE TABLE contact_submissions (
-     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-     name TEXT NOT NULL,
-     email TEXT NOT NULL,
-     company TEXT,
-     message TEXT NOT NULL,
-     project_type TEXT,
-     status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'responded', 'archived')),
-     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
-   );
-
-   -- Enable Row Level Security
-   ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
-   ALTER TABLE contact_submissions ENABLE ROW LEVEL SECURITY;
-
-   -- Allow public read access to projects
-   CREATE POLICY "Projects are publicly readable" ON projects
-     FOR SELECT USING (true);
-
-   -- Allow insert access to contact submissions
-   CREATE POLICY "Anyone can submit contact forms" ON contact_submissions
-     FOR INSERT WITH CHECK (true);
-   ```
-
-5. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-
-   Open [http://localhost:3000](http://localhost:3000) to view the site.
-
-## Azure Functions Setup
-
-The contact form uses Azure Functions for backend processing.
-
-### Local Development
-
-1. **Install Azure Functions Core Tools**
-   ```bash
-   npm install -g azure-functions-core-tools@4 --unsafe-perm true
-   ```
-
-2. **Navigate to API directory and install dependencies**
-   ```bash
-   cd ../api
-   npm install
-   ```
-
-3. **Run the Functions locally**
-   ```bash
-   npm start
-   ```
-
-   The Functions will be available at `http://localhost:7071`
-
-### Deployment
-
-The Azure Functions will be deployed automatically with Azure Static Web Apps.
-
-## Static Web Apps Deployment
-
-This project is configured for Azure Static Web Apps deployment.
-
-### Prerequisites
-
-- Azure account
-- GitHub repository
-
-### Setup
-
-1. **Create Azure Static Web App**
-   - Go to Azure Portal
-   - Create new Static Web App
-   - Connect to your GitHub repository
-   - Set build configuration:
-     - App location: `/src`
-     - API location: `/api`
-     - Output location: `out`
-
-2. **Configure Environment Variables**
-   
-   In Azure Portal, add these environment variables to your Static Web App:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-
-3. **The GitHub Action will automatically deploy on push to main branch**
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 src/
-├── app/                    # Next.js App Router
-│   ├── globals.css        # Global styles
-│   ├── layout.tsx         # Root layout
-│   ├── page.tsx           # Home page
-│   ├── projects/          # Projects page
-│   └── api/               # API routes
-├── components/            # React components
-│   ├── Header.tsx
-│   ├── HeroSection.tsx
-│   ├── ProjectsSection.tsx
-│   └── ContactSection.tsx
-├── lib/                   # Utilities
-│   └── supabase.ts       # Supabase client
-├── types/                 # TypeScript types
-│   └── database.ts
-├── package.json
-├── next.config.js
-├── tailwind.config.js
-└── tsconfig.json
-
-api/                       # Azure Functions
-├── contact/
-│   ├── index.ts          # Contact form handler
-│   └── function.json     # Function binding
-├── host.json
-├── package.json
-└── tsconfig.json
+├── components/
+│   ├── Navbar.jsx      # Navigation with dark mode toggle
+│   ├── Hero.jsx        # Hero section with animations
+│   ├── About.jsx       # About us section
+│   ├── Projects.jsx    # Projects portfolio
+│   ├── Testimonials.jsx # Customer testimonials
+│   ├── Contact.jsx     # Contact form
+│   └── Footer.jsx      # Footer with links
+├── App.jsx             # Main application component
+├── main.jsx           # Application entry point
+└── index.css          # Global styles and Tailwind imports
 ```
 
-## Customization
+## 🎨 Design Features
 
-### Adding Projects
+### Modern UI Elements
+- **Glassmorphism**: Semi-transparent elements with backdrop blur
+- **Gradient Backgrounds**: Beautiful color transitions
+- **Card Hover Effects**: Interactive hover animations
+- **Smooth Scrolling**: Enhanced user experience
+- **Loading States**: Elegant loading animations
 
-1. **Via Supabase Dashboard**: Add projects directly to the `projects` table
-2. **Via API**: Create an admin interface (future enhancement)
+### Sections Included
+1. **Hero Section**: Eye-catching landing with call-to-action
+2. **About Us**: Company story, mission, and values
+3. **Projects**: Portfolio showcase with filtering
+4. **Testimonials**: Customer feedback carousel
+5. **Contact Form**: Modern form with validation
+6. **Footer**: Comprehensive site links and information
 
-### Styling
+## 🚀 Getting Started
 
-- Edit `tailwind.config.js` for design system changes
-- Update `app/globals.css` for custom CSS
-- Modify component styles in individual component files
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
 
-### Contact Form
+### Installation
 
-- Update `api/contact/index.ts` to integrate with your email service
-- Modify `components/ContactSection.tsx` for form changes
-- Add additional fields as needed
+1. Clone the repository
+```bash
+git clone <repository-url>
+cd pbw-network-react
+```
 
-## Environment Variables
+2. Install dependencies
+```bash
+npm install
+```
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL | Yes |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase anonymous key | Yes |
-| `NEXT_PUBLIC_AZURE_FUNCTION_URL` | Azure Functions endpoint | Optional |
+3. Start the development server
+```bash
+npm run dev
+```
 
-## Scripts
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### Available Scripts
 
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
-- `npm run start` - Start production server
+- `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
-- `npm run type-check` - Run TypeScript check
 
-## Contributing
+## 🎯 Customization
+
+### Colors
+The color scheme can be customized in `tailwind.config.js`:
+```javascript
+colors: {
+  primary: {
+    // Your brand colors
+  }
+}
+```
+
+### Content
+Update the content in each component file:
+- Company information in `About.jsx`
+- Projects in `Projects.jsx`
+- Testimonials in `Testimonials.jsx`
+- Contact information in `Contact.jsx` and `Footer.jsx`
+
+### Animations
+Animations are powered by Framer Motion. Customize them in each component by modifying the `variants` objects.
+
+## 📱 Responsive Design
+
+The website is fully responsive with breakpoints:
+- Mobile: < 768px
+- Tablet: 768px - 1024px
+- Desktop: > 1024px
+
+## 🌙 Dark Mode
+
+Dark mode is implemented using Tailwind's dark mode feature with class strategy. Users can toggle between themes using the button in the navigation.
+
+## 🔧 Performance Optimizations
+
+- **Vite**: Fast build tool with HMR
+- **Code Splitting**: Automatic code splitting
+- **Image Optimization**: Responsive images with proper sizing
+- **CSS Purging**: Unused CSS removal in production
+- **Modern JavaScript**: Optimized bundle sizes
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
-## License
+## 📧 Support
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+For support, email hello@pbwwebarchitects.com or create an issue in the repository.
 
-## Support
+---
 
-For support, email hello@pbw.network or create an issue in the GitHub repository.
+Built with ❤️ by PBW Web Architects
