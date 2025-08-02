@@ -2,6 +2,7 @@
 export NODE_OPTIONS="--no-deprecation"
 export ORYX_DISABLE_NODEJS_VERSION_CHECK="true"
 
-# Ensure npm uses legacy peer deps
+# Ensure npm uses legacy peer deps and ignores engine restrictions
 echo "legacy-peer-deps=true" > .npmrc
 echo "fund=false" >> .npmrc
+echo "engine-strict=false" >> .npmrc
