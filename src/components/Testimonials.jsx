@@ -34,27 +34,7 @@ const Testimonials = () => {
       content: 'The Audit Portal has transformed the way we handle our HUD audits. Gone are the days of managing stacks of paperwork and scheduling in-person visits for every audit cycle. Now, all our financials and supporting documents are securely centralized, giving auditors remote access to everything they need. This not only saves us valuable time and resources but has also made the entire audit process smoother, more transparent, and far less stressful for our staff. We highly recommend Audit Portal to any Public Housing Authority seeking a modern solution for audit management.',
       rating: 5,
       project: 'PHA Audit Portal'
-    },
-    {
-      id: 4,
-      name: 'David Thompson',
-      position: 'Founder',
-      company: 'GreenTech Solutions',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      content: 'PBW\'s IoT platform revolutionized our smart city project. The real-time monitoring capabilities and intuitive dashboard have made managing our infrastructure incredibly efficient. Their technical expertise is world-class.',
-      rating: 5,
-      project: 'Smart City IoT Platform'
-    },
-    {
-      id: 5,
-      name: 'Lisa Park',
-      position: 'VP of Technology',
-      company: 'RetailMax',
-      image: 'https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      content: 'The AI-powered analytics dashboard from PBW has transformed how we make business decisions. The predictive insights have helped us optimize inventory, improve customer satisfaction, and increase revenue by 25%.',
-      rating: 5,
-      project: 'AI Analytics Dashboard'
-    }
+    } 
   ]
 
   const nextSlide = () => {
