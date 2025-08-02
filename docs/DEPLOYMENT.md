@@ -150,7 +150,9 @@ pbw-network-react/
 │   │   ├── function.json        # Function configuration
 │   │   └── index.js             # Contact form handler
 │   ├── host.json               # Functions runtime config
-│   └── package.json            # API dependencies
+│   ├── package.json            # API dependencies
+│   ├── .funcignore             # Azure Functions deployment exclusions
+│   └── .gitignore              # Git exclusions for API
 ├── src/                         # React application
 │   ├── components/
 │   │   └── Contact.jsx         # Contact form component
@@ -158,6 +160,7 @@ pbw-network-react/
 ├── .github/workflows/
 │   └── azure-static-web-apps.yml # Deployment workflow
 ├── staticwebapp.config.json     # Azure SWA configuration
+├── .swatignore                  # SWA CLI deployment exclusions
 ├── .env.example                 # Environment template
 └── package.json                # Frontend dependencies
 ```
@@ -215,20 +218,35 @@ pbw-network-react/
 
 ### Common Issues
 
-1. **API Not Working**
+1. **Deployment Size Limit Exceeded**
+   - Error: "The size of the function content was too large. The limit for this Static Web App is 104857600 bytes"
+   - **Solution**: Ensure `.funcignore` and `.swatignore` files exclude `node_modules/`
+   - **Files to check**:
+     ```
+     api/.funcignore         # Excludes files from Azure Functions deployment
+     .swatignore            # Excludes files from SWA CLI deployment
+     api/.gitignore         # Git exclusions for API directory
+     ```
+
+2. **API Not Working**
    - Check environment variables in Azure Portal
    - Verify SendGrid API key permissions
    - Check Azure Functions logs in Application Insights
 
-2. **Emails Not Sending**
+3. **Emails Not Sending**
    - Verify SendGrid sender authentication
    - Check API key permissions (needs Mail Send)
    - Review SendGrid activity logs
 
-3. **Build Failures**
+4. **Build Failures**
    - Check Node.js version (requires 18+)
    - Verify all dependencies are installed
    - Check for TypeScript errors
+
+5. **CSS/Asset Loading Issues**
+   - Error: "MIME type ('text/html') is not a supported stylesheet MIME type"
+   - **Solution**: Check `staticwebapp.config.json` routing configuration
+   - Ensure assets are excluded from HTML fallback routes
 
 ### Debugging
 
