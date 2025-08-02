@@ -8,6 +8,8 @@
     "build": "NODE_OPTIONS='--no-deprecation' vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "NODE_OPTIONS='--no-deprecation' vite preview",
+    "start:local": "./start-local.sh",
+    "start:local:install": "./start-local.sh --install",
     "preinstall": "echo 'Setting up legacy peer deps'",
     "postinstall": "echo 'Dependencies installed successfully'"
   },
