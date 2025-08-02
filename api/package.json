@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "func start",
+    "build": "echo 'Build complete'",
+    "watch": "echo 'Watch mode ready'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0"
   },
   "devDependencies": {
-    "azure-functions-core-tools": "^4.0.5198"
+    "azure-functions-core-tools": "^4.0.5915"
   }
 }
