@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // Environment variable for reCAPTCHA site key
-const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+const RECAPTCHA_SITE_KEY = '6LeJ9mMiAAAAADLCrRo5KY7-VD96Zb26L7IrTLf6';
 
 export const useRecaptcha = () => {
   const [isRecaptchaLoaded, setIsRecaptchaLoaded] = useState(false);
