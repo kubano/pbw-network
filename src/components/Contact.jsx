@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Mail, Phone, MapPin, Send, CheckCircle, Clock, Users, AlertCircle } from 'lucide-react'
+import useRecaptcha from '../hooks/useRecaptcha'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,9 @@ const Contact = () => {
   const [errors, setErrors] = useState({}) 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+
+  // Initialize reCAPTCHA hook
+  const { isRecaptchaLoaded, recaptchaError, executeRecaptcha } = useRecaptcha()
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -111,16 +115,34 @@ const Contact = () => {
     if (!validateForm()) {
       return
     }
+
+    // Check for reCAPTCHA errors
+    if (recaptchaError) {
+      setErrors({
+        submit: 'Security verification failed. Please refresh the page and try again.'
+      })
+      return
+    }
     
     setIsSubmitting(true)
     
     try {
+      // Execute reCAPTCHA before form submission
+      const recaptchaToken = await executeRecaptcha('contact_form')
+      
+      if (!recaptchaToken) {
+        throw new Error('Security verification failed. Please try again.')
+      }
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken // Include reCAPTCHA token
+        })
       })
       
       const result = await response.json()
@@ -400,21 +422,50 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !isRecaptchaLoaded}
                   className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-colors duration-200"
                 >
-                  {isSubmitting ? (
+                  {isSubmitting && (
                     <>
                       <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2" />
                       Sending...
                     </>
-                  ) : (
+                  )}
+                  {!isSubmitting && !isRecaptchaLoaded && (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2" />
+                      Loading Security...
+                    </>
+                  )}
+                  {!isSubmitting && isRecaptchaLoaded && (
                     <>
                       Send Message
                       <Send className="ml-2 h-5 w-5" />
                     </>
                   )}
                 </button>
+
+                {/* reCAPTCHA Status */}
+                <div className="text-xs text-gray-500 dark:text-gray-400 text-center space-y-1">
+                  {!isRecaptchaLoaded && (
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="animate-spin rounded-full h-3 w-3 border border-gray-400 border-t-transparent" />
+                      Loading security verification...
+                    </div>
+                  )}
+                  {isRecaptchaLoaded && (
+                    <div className="flex items-center justify-center gap-2">
+                      <CheckCircle className="h-3 w-3 text-green-500" />
+                      Protected by reCAPTCHA
+                    </div>
+                  )}
+                  {recaptchaError && (
+                    <div className="flex items-center justify-center gap-2 text-red-500">
+                      <AlertCircle className="h-3 w-3" />
+                      Security verification error
+                    </div>
+                  )}
+                </div>
               </form>
             )}
           </div>

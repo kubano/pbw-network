@@ -42,7 +42,7 @@ module.exports = async function (context, req) {
         }
 
         // Validate request body
-        const { name, email, company, phone, interest, message } = req.body || {};
+        const { name, email, company, phone, interest, message, recaptchaToken } = req.body || {};
 
         if (!name || !email || !interest || !message) {
             context.res = {
@@ -52,6 +52,75 @@ module.exports = async function (context, req) {
                     error: 'Missing required fields',
                     required: ['name', 'email', 'interest', 'message']
                 }
+            };
+            return;
+        }
+
+        // Validate reCAPTCHA token
+        if (!recaptchaToken) {
+            context.res = {
+                ...context.res,
+                status: 400,
+                body: { error: 'Security verification failed. Please try again.' }
+            };
+            return;
+        }
+
+        // Verify reCAPTCHA token with Google
+        const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
+        if (!recaptchaSecretKey) {
+            context.log.error('RECAPTCHA_SECRET_KEY environment variable is not set');
+            context.res = {
+                ...context.res,
+                status: 500,
+                body: { error: 'Server configuration error' }
+            };
+            return;
+        }
+
+        try {
+            const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    secret: recaptchaSecretKey,
+                    response: recaptchaToken,
+                    remoteip: req.headers['x-forwarded-for'] || req.connection?.remoteAddress || ''
+                })
+            });
+
+            const recaptchaResult = await recaptchaResponse.json();
+            
+            if (!recaptchaResult.success) {
+                context.log.warn('reCAPTCHA verification failed:', recaptchaResult['error-codes']);
+                context.res = {
+                    ...context.res,
+                    status: 400,
+                    body: { error: 'Security verification failed. Please try again.' }
+                };
+                return;
+            }
+
+            // Check reCAPTCHA score (for v3, score should be > 0.5)
+            if (recaptchaResult.score && recaptchaResult.score < 0.5) {
+                context.log.warn(`reCAPTCHA score too low: ${recaptchaResult.score}`);
+                context.res = {
+                    ...context.res,
+                    status: 400,
+                    body: { error: 'Security verification failed. Please try again.' }
+                };
+                return;
+            }
+
+            context.log(`reCAPTCHA verification successful. Score: ${recaptchaResult.score || 'N/A'}`);
+        } catch (recaptchaError) {
+            context.log.error('Error verifying reCAPTCHA:', recaptchaError);
+            context.res = {
+                ...context.res,
+                status: 500,
+                body: { error: 'Security verification failed. Please try again.' }
             };
             return;
         }
