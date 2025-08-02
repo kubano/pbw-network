@@ -36,7 +36,7 @@ const Hero = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img 
-          src="/hero-bg.jpg" 
+          src="https://pbwblobs.blob.core.windows.net/pnw-network-images/hero-bg.jpg" 
           alt="Technology Background" 
           className="w-full h-full object-cover"
         />

@@ -53,6 +53,7 @@ This React application is configured for deployment to Azure Static Web Apps wit
      FROM_EMAIL=noreply@pbwweb.com
      NODE_ENV=production
      ```
+   - **Important**: Wait 2-3 minutes after saving for changes to take effect
 
 3. **Get Deployment Token**
    - In Azure Portal, go to your Static Web App

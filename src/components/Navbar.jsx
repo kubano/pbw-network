@@ -71,7 +71,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
             className="flex items-center space-x-3 cursor-pointer"
           >
             <img 
-              src="/pbw-logo-built-nav.png" 
+              src="https://pbwblobs.blob.core.windows.net/pnw-network-images/pbw-logo-built-nav.png" 
               alt="Built Logo" 
               className="h-10 w-auto"
             />
