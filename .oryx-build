@@ -1,2 +1,7 @@
 #!/bin/bash
 export NODE_OPTIONS="--no-deprecation"
+export ORYX_DISABLE_NODEJS_VERSION_CHECK="true"
+
+# Ensure npm uses legacy peer deps
+echo "legacy-peer-deps=true" > .npmrc
+echo "fund=false" >> .npmrc
