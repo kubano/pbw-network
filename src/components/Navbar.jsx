@@ -175,9 +175,9 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 rounded-lg transition-all duration-300 ${
+              className={`p-2 rounded-lg transition-all duration-300 me-2 ${
                 isScrolled
-                  ? 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
+                  ? 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-dark/20'
                   : 'bg-white/20 backdrop-blur-sm text-white border border-white/20'
               }`}
             >
