@@ -107,9 +107,9 @@ export const projectsData = [
     ],
     results: [
       '98% reduction in deployment time',
-      '99.9% deployment success rate',
+      '99.9% content update success rate',
       '100% increase in customer satisfaction',
-      '100% increase in Cllient Interaction',
+      '100% increase in Client Interaction',
     ],
     github: '#',
     live: 'https://www.lakelandhousing.org/',
