@@ -165,7 +165,7 @@ export const projectsData = [
     ],
     results: [
       '100% uptime achieved',
-      '0% reduction in manual data entry errors and use of Excel and other legacy systems',
+      '100% reduction in manual data entry errors and use of Excel and other legacy systems',
       '100% adoption of Auditors and Inspectors',
       '100% Increase in Team Collaboration'
     ],
@@ -220,8 +220,9 @@ export const projectsData = [
       'Migration from Windows IIS to Azure App Service',
       'Migration from MS SQL Server to Azure SQL for data storage and management with comprehensive security and scalability',
       'Migration from Legacy Web Forms to modern .NET technologies',
-      'Azure Storage and CDN media item management',
-      'Azure Web Jobs to support background processing and scheduled tasks'
+      'Azure Blobs Storage and CDN media item management',
+      'Azure Web Jobs to support background processing and scheduled tasks',
+      'Oracle Cloud integration for order management and fulfillment',
     ],
     results: [
       '100% uptime achieved',
