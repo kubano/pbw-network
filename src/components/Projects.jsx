@@ -55,20 +55,26 @@ const Projects = () => {
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="absolute bottom-4 left-4 right-4 flex gap-2">
-                      <a
-                        href={project.github}
-                        className="p-2 bg-white/90 rounded-lg text-gray-800 hover:bg-white transition-colors duration-200"
-                        title="View Code"
-                      >
-                        <Code className="h-5 w-5" />
-                      </a>
-                      <a
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target='_blank'
+                          className="p-2 bg-white/90 rounded-lg text-gray-800 hover:bg-white transition-colors duration-200"
+                          title="View Code"
+                        >
+                          <Code className="h-5 w-5" />
+                        </a>
+                      )}
+                      {project.live && (
+                        <a
                         href={project.live}
+                        target='_blank'
                         className="p-2 bg-white/90 rounded-lg text-gray-800 hover:bg-white transition-colors duration-200"
                         title="Example Website"
                       >
                         <ExternalLink className="h-5 w-5" />
                       </a>
+                      )}
                     </div>
                   </div>
                   {project.featured && (
