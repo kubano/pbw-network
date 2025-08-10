@@ -29,7 +29,14 @@
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     "Permissions-Policy": "geolocation=(), accelerometer=(), camera=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()",
-    "Content-Security-Policy": "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https:;"
+    "Content-Security-Policy": "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https:;",
+    "Server": "PBW Infrastructure",
+    "X-Powered-By": "PBW Web Architects, LLC.",
+    "Cross-Origin-Embedder-Policy": "require-corp; report-to='default'",
+    "Cross-Origin-Embedder-Policy-Report-Only": "require-corp; report-to='default'",
+    "Cross-Origin-Opener-Policy": "same-origin-allow-popups; report-to='default'",
+    "Cross-Origin-Opener-Policy-Report-Only": "same-origin; report-to='default'",
+    "Cross-Origin-Resource-Policy": "same-origin;"
   },
   "mimeTypes": {
     ".json": "application/json",
