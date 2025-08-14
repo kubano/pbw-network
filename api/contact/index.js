@@ -400,7 +400,7 @@ Submitted on: ${new Date().toLocaleString('en-US', {
                             <div style="background-color: #fef7ff; border: 1px solid #e879f9; border-radius: 8px; padding: 20px; text-align: center;">
                                 <h4 style="color: #1e293b; margin: 0 0 16px 0; font-size: 16px; font-weight: 600;">Need to reach us immediately?</h4>
                                 <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-                                    <a href="tel:+18633541971" style="display: inline-block; background-color: #a855f7; color: #ffffff; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">
+                                    <a href="tel:+18633541971" style="display: inline-block; background-color: #a855f7; color: #ffffff; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; margin-right: 12px;">
                                         +1 (863) 354-1971
                                     </a>
                                     <a href="mailto:support@pbwweb.com" style="display: inline-block; background-color: #ec4899; color: #ffffff; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">
