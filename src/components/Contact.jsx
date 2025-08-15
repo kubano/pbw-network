@@ -370,12 +370,12 @@ const Contact = () => {
                     }`}
                   >
                     <option value="">Select a project interest...</option>
-                    <option value="marketing-website">Marketing Web site</option>
-                    <option value="web-application">Web Application Development</option>
-                    <option value="cloud-consulting">Cloud Consulting</option>
-                    <option value="cloud-migration">Cloud Migration</option>
-                    <option value="azure-devops-github">Azure DevOps - GitHub</option>
-                    <option value="project-management">Project Management</option>
+                    <option value="Marketing Web site">Marketing Web site</option>
+                    <option value="Web Application Development">Web Application Development</option>
+                    <option value="Cloud Consulting">Cloud Consulting</option>
+                    <option value="Cloud Migration">Cloud Migration</option>
+                    <option value="Azure DevOps - GitHub">Azure DevOps - GitHub</option>
+                    <option value="Project Management">Project Management</option>
                   </select>
                   {errors.interest && (
                     <div className="flex items-center mt-2 text-red-600 text-sm">
