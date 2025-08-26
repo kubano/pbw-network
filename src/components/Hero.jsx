@@ -159,9 +159,9 @@ const Hero = () => {
             className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mt-12 md:mt-20 p-4 md:p-8 mb-8 md:mb-12"
           >
             {[
-              { number: '58+', label: 'Projects Delivered' },
-              { number: '42+', label: 'Happy Clients' },
-              { number: '25+', label: 'Years Experience Combined' },
+              { number: '80+', label: 'Projects Delivered' },
+              { number: '58+', label: 'Happy Clients' },
+              { number: '45+', label: 'Years Experience Combined' },
             ].map((stat, index) => (
               <motion.div
                 key={index}

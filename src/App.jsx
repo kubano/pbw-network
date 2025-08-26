@@ -9,6 +9,7 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import ProjectDetails from './components/ProjectDetails'
 import AllProjects from './components/AllProjects'
+import Resume from './components/Resume'
 
 // Home page component
 const HomePage = () => (
@@ -49,13 +50,20 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
-        <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/projects" element={<AllProjects />} />
-          <Route path="/projects/:slug" element={<ProjectDetails darkMode={darkMode} />} />
+          <Route path="/resume" element={<Resume />} />
+          <Route path="/*" element={
+            <>
+              <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/projects" element={<AllProjects />} />
+                <Route path="/projects/:slug" element={<ProjectDetails darkMode={darkMode} />} />
+              </Routes>
+              <Footer />
+            </>
+          } />
         </Routes>
-        <Footer />
       </div>
     </Router>
   )
