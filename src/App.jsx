@@ -10,6 +10,7 @@ import Footer from './components/Footer'
 import ProjectDetails from './components/ProjectDetails'
 import AllProjects from './components/AllProjects'
 import Resume from './components/Resume'
+import NotFound from './components/NotFound'
 
 // Home page component
 const HomePage = () => (
@@ -51,18 +52,34 @@ function App() {
     <Router>
       <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
         <Routes>
+          {/* Special routes without navbar */}
           <Route path="/resume" element={<Resume />} />
-          <Route path="/*" element={
+          
+          {/* Main site routes with navbar and footer */}
+          <Route path="/" element={
             <>
               <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/projects" element={<AllProjects />} />
-                <Route path="/projects/:slug" element={<ProjectDetails darkMode={darkMode} />} />
-              </Routes>
+              <HomePage />
               <Footer />
             </>
           } />
+          <Route path="/projects" element={
+            <>
+              <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+              <AllProjects />
+              <Footer />
+            </>
+          } />
+          <Route path="/projects/:slug" element={
+            <>
+              <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+              <ProjectDetails darkMode={darkMode} />
+              <Footer />
+            </>
+          } />
+          
+          {/* 404 page without navbar */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
