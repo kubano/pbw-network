@@ -45,6 +45,19 @@ const Resume = () => {
 
   const experience = [
     {
+      title: "President & Lead Web Architect",
+      company: "PBW Web Architects, LLC",
+      period: "January 2005 - Present",
+      location: "United States",
+      responsibilities: [
+        "Founded and served as Chief Architect, overseeing all aspects of enterprise full stack web development using MS Stack and Azure Cloud, leading to successful delivery of 50+ web projects and App Modernizations/Migrations",
+        "Led enterprise full stack web development for 45+ enterprise projects using MS Stack, Azure Cloud, and modern JS Frameworks, accelerating project turnaround by 45%",
+        "Developed and managed databases using MSSQL, TSQL, SSIS, SSRS, Cosmos DB, and MongoDB, enhancing data processing efficiency by 25%",
+        "Designed and implemented RESTful APIs and Microservices, increasing system reliability and scalability by 20%",
+        "Implemented Agile, Scrum, and Lean processes using Azure DevOps and Git, leading to a 15% increase in team productivity and project delivery speed"
+      ]
+    },
+    {
       title: "Sr. Software Engineer (Resident Architect)",
       company: "Broward County Enterprise Technology Services",
       period: "December 2016 - Present",
@@ -58,19 +71,7 @@ const Resume = () => {
         "Spearheaded the re-architecture of the County's Ecommerce Platform using software development best practices: Clean Architecture, DDD, OOP, increasing platform scalability by 99.9%"
       ]
     },
-    {
-      title: "President & Lead Web Architect",
-      company: "PBW Web Architects, LLC",
-      period: "January 2005 - Present",
-      location: "United States",
-      responsibilities: [
-        "Founded and served as Chief Architect, overseeing all aspects of enterprise full stack web development using MS Stack and Azure Cloud, leading to successful delivery of 50+ web projects and App Modernizations/Migrations",
-        "Led enterprise full stack web development for 45+ enterprise projects using MS Stack, Azure Cloud, and modern JS Frameworks, accelerating project turnaround by 45%",
-        "Developed and managed databases using MSSQL, TSQL, SSIS, SSRS, Cosmos DB, and MongoDB, enhancing data processing efficiency by 25%",
-        "Designed and implemented RESTful APIs and Microservices, increasing system reliability and scalability by 20%",
-        "Implemented Agile, Scrum, and Lean processes using Azure DevOps and Git, leading to a 15% increase in team productivity and project delivery speed"
-      ]
-    },
+    
     {
       title: "Information Technology Operations Manager",
       company: "Lakeland Housing Authority",
