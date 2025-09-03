@@ -88,8 +88,8 @@ const ProjectDetails = () => {
         </div>
         
         <div className="relative h-full flex items-center">
-          <div className="container mx-auto px-6 md:px-8">
-            <div className="max-w-4xl mt-8 md:mt-0">
+          <div className="container-custom mx-auto px-6 md:px-8 text-center">
+            <div className="max-w-2xl mt-8 md:mt-0">
               <div className="mb-4">
                 <span className="inline-block bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-medium">
                   {project.category.charAt(0).toUpperCase() + project.category.slice(1)} Project
@@ -104,7 +104,7 @@ const ProjectDetails = () => {
                 {project.subtitle}
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="text-center">
                 {project.live && (
                   <a
                     target='_blank'
@@ -123,7 +123,7 @@ const ProjectDetails = () => {
 
       {/* Project Info Grid */}
       <section className="py-12 md:py-16">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container-custom mx-auto px-4 md:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-16">
             <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 md:p-6 rounded-lg text-center hover:shadow-md transition-shadow duration-200">
               <Clock className="h-6 w-6 md:h-8 md:w-8 text-primary-600 mx-auto mb-2 md:mb-3" />
