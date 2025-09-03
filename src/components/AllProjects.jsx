@@ -81,7 +81,7 @@ const AllProjects = () => {
 
       {/* Projects Grid */}
       <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-6 md:px-8">
+        <div className="container-custom mx-auto px-2 md:px-2">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {sortedProjects.map((project) => (
               <div

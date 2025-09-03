@@ -72,7 +72,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
           >
             <img 
               src="https://pbwblobs.blob.core.windows.net/pnw-network-images/pbw-logo-built-nav.png" 
-              alt="Built Logo" 
+              alt="PBW Web Architects Logo" 
               className="h-10 w-auto"
             />
             <span className={`text-xl font-display font-bold transition-all duration-300 hidden md:inline ${
@@ -80,7 +80,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
                 ? 'gradient-text'
                 : 'text-white drop-shadow-lg'
             }`}>
-              PBW
+              PBW Web Architects
             </span>
           </motion.button>
 
